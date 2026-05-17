@@ -1,0 +1,14 @@
+{
+  "group": "learning",
+  "status": "skeleton_only",
+  "algorithms": [
+    "td_zero",
+    "td_lambda",
+    "sarsa",
+    "q_learning"
+  ],
+  "grid_size": [
+    8,
+    8
+  ]
+}

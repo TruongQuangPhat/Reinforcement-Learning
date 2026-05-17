@@ -1,0 +1,14 @@
+{
+  "group": "planning",
+  "status": "skeleton_only",
+  "algorithms": [
+    "policy_evaluation",
+    "policy_iteration",
+    "value_iteration",
+    "linear_programming"
+  ],
+  "grid_size": [
+    8,
+    8
+  ]
+}
