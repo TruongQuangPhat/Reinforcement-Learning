@@ -1,0 +1,26 @@
+{
+  "policy_evaluation": {
+    "wall_time_sec": 1.679999695625156e-05,
+    "cpu_time_sec": 1.2500000000005562e-05,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "policy_iteration": {
+    "wall_time_sec": 3.7999998312443495e-06,
+    "cpu_time_sec": 3.7000000000023126e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "value_iteration": {
+    "wall_time_sec": 3.4999975468963385e-06,
+    "cpu_time_sec": 3.5000000000035003e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "linear_programming": {
+    "wall_time_sec": 5.600006261374801e-06,
+    "cpu_time_sec": 5.600000000001437e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  }
+}

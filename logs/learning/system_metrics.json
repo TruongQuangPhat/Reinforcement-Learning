@@ -1,0 +1,26 @@
+{
+  "td_zero": {
+    "wall_time_sec": 1.3899996702093631e-05,
+    "cpu_time_sec": 9.099999999997999e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "td_lambda": {
+    "wall_time_sec": 2.7999994927085936e-06,
+    "cpu_time_sec": 2.7000000000013125e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "sarsa": {
+    "wall_time_sec": 2.1000014385208488e-06,
+    "cpu_time_sec": 2.099999999997937e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  },
+  "q_learning": {
+    "wall_time_sec": 1.3999961083754897e-06,
+    "cpu_time_sec": 1.4999999999945612e-06,
+    "current_memory_mb": 0.00038909912109375,
+    "peak_memory_mb": 0.00038909912109375
+  }
+}
