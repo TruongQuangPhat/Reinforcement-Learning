@@ -1,6 +1,6 @@
 ---
 name: rl-learning-algorithms
-description: Use this skill when implementing, reviewing, testing, or explaining Learning Algorithms for the Grid-world project: TD(0), SARSA, Q-learning, and TD(lambda).
+description: "Use this skill when implementing, reviewing, testing, or explaining Learning Algorithms for the Grid-world project: TD(0), SARSA, Q-learning, and TD(lambda)."
 ---
 
 # RL Learning Algorithms Skill

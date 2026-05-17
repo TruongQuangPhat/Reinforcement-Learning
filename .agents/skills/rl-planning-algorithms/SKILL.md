@@ -1,6 +1,6 @@
 ---
 name: rl-planning-algorithms
-description: Use this skill when implementing, reviewing, testing, or explaining Planning Algorithms for the Grid-world project: Policy Evaluation, Policy Iteration, Value Iteration, and Linear Programming.
+description: "Use this skill when implementing, reviewing, testing, or explaining Planning Algorithms for the Grid-world project: Policy Evaluation, Policy Iteration, Value Iteration, and Linear Programming."
 ---
 
 # RL Planning Algorithms Skill
