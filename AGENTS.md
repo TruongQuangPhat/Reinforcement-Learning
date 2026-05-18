@@ -70,10 +70,10 @@ Reinforcement-Learning/
 ## Environment rules
 
 - envs/grid_world.py defines shared abstractions/interfaces.
-- envs/planning_grid_world.py exposes full transition model through transition_prob().
+- envs/planning_grid_world.py exposes full transition model through get_transitions().
 - envs/learning_grid_world.py exposes sample interaction through reset() and step().
-- Planning algorithms may use transition_prob().
-- Learning algorithms must not use transition_prob() during training.
+- Planning algorithms may use get_transitions().
+- Learning algorithms must not use get_transitions() during training.
 
 ## Experiment rules
 
