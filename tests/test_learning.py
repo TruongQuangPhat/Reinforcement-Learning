@@ -54,6 +54,27 @@ class LearningAlgorithmTests(unittest.TestCase):
         ):
             self.assertIn(key, metrics)
 
+    def test_td_zero_records_expected_prediction_metrics(self) -> None:
+        env = GuardedLearningGridWorld(seed=7)
+        learner = TDZero(env, episodes=3, max_steps_per_episode=5, seed=7)
+
+        learner.train()
+        metrics = learner.get_metrics()
+
+        for key in (
+            "episodes",
+            "environment_steps",
+            "mean_absolute_td_error_per_episode",
+            "final_mean_absolute_td_error",
+            "mse_vs_policy_evaluation",
+            "value_function",
+            "runtime_sec",
+            "cpu_time_sec",
+            "peak_memory_mb",
+        ):
+            self.assertIn(key, metrics)
+        self.assertEqual(metrics["episodes"], 3)
+
     def test_td_zero_one_step_updates_only_start_state(self) -> None:
         env = GuardedLearningGridWorld(seed=4)
         learner = TDZero(env, episodes=1, max_steps_per_episode=1, seed=4)
@@ -94,6 +115,38 @@ class LearningAlgorithmTests(unittest.TestCase):
         learner_b.train()
 
         self.assertEqual(learner_a.get_q_table(), learner_b.get_q_table())
+
+    def test_q_learning_one_step_update_has_expected_value(self) -> None:
+        env = GuardedLearningGridWorld(seed=8)
+        learner = QLearning(
+            env,
+            alpha=0.5,
+            gamma=0.9,
+            epsilon=0.0,
+            episodes=1,
+            max_steps_per_episode=1,
+            seed=8,
+        )
+
+        learner.train()
+
+        self.assertEqual(learner.get_q_table()[(env.start_state, "up")], -0.5)
+
+    def test_sarsa_one_step_update_has_expected_value(self) -> None:
+        env = GuardedLearningGridWorld(seed=9)
+        learner = SARSA(
+            env,
+            alpha=0.5,
+            gamma=0.9,
+            epsilon=0.0,
+            episodes=1,
+            max_steps_per_episode=1,
+            seed=9,
+        )
+
+        learner.train()
+
+        self.assertEqual(learner.get_q_table()[(env.start_state, "up")], -0.5)
 
 
 if __name__ == "__main__":

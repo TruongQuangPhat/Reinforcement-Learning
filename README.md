@@ -86,6 +86,26 @@ Reinforcement-Learning/
 python3 run_experiments.py
 ```
 
+## Chạy Test
+
+Chạy toàn bộ test suite với output màu:
+
+```bash
+python3 run_tests.py
+```
+
+Quy ước màu:
+
+- Xanh: test pass
+- Đỏ: test fail/error
+- Vàng: warning/skip/expected failure
+
+Nếu terminal không hỗ trợ ANSI color:
+
+```bash
+python3 run_tests.py --no-color
+```
+
 ## Phần Learning Hiện Có
 
 `agents/learning.py` đã cài đặt bốn thuật toán model-free:
@@ -102,8 +122,8 @@ cho các thuật toán control. Các so sánh với baseline planning như
 `mse_vs_value_iteration` và `policy_agreement_vs_value_iteration` được giữ sẵn
 trong schema nhưng sẽ có giá trị sau khi phần planning hoàn thiện.
 
-Chạy test learning:
+Vẫn có thể dùng runner mặc định của Python:
 
 ```bash
-python -m unittest tests.test_learning
+python3 -m unittest discover -s tests -v
 ```
