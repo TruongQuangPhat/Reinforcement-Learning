@@ -8,9 +8,9 @@
     "linear_programming"
   ],
   "metadata": {
-    "timestamp_utc": "2026-05-18T05:41:51.918618+00:00",
+    "timestamp_utc": "2026-05-18T05:48:33.991638+00:00",
     "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
-    "numpy_version": "2.2.6",
+    "numpy_version": "1.26.4",
     "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
     "random_seed": 42,
     "grid_size": [

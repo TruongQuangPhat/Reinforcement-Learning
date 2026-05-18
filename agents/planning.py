@@ -142,15 +142,24 @@ class PolicyIteration:
         policy_changes_per_iteration: list[int] = []
         evaluation_iterations_per_improvement: list[int] = []
         evaluation_residuals_per_improvement: list[list[float]] = []
+        evaluation_converged_per_improvement: list[bool] = []
         total_evaluation_iterations = 0
         bellman_backups = 0
+        policy_stable = False
+        evaluation_converged = False
 
         for improvement_iteration in range(1, self.max_iterations + 1):
-            eval_iterations, eval_residuals, eval_backups = self._evaluate_current_policy()
+            (
+                eval_iterations,
+                eval_residuals,
+                eval_backups,
+                evaluation_converged,
+            ) = self._evaluate_current_policy()
             total_evaluation_iterations += eval_iterations
             bellman_backups += eval_backups
             evaluation_iterations_per_improvement.append(eval_iterations)
             evaluation_residuals_per_improvement.append(eval_residuals)
+            evaluation_converged_per_improvement.append(evaluation_converged)
 
             policy_stable = True
             policy_changes = 0
@@ -169,22 +178,32 @@ class PolicyIteration:
 
             self.policy = new_policy
             policy_changes_per_iteration.append(policy_changes)
-            if policy_stable:
+            if policy_stable and evaluation_converged:
                 break
 
         status = (
             "converged"
-            if policy_changes_per_iteration[-1] == 0
+            if policy_stable and evaluation_converged
             else "max_iterations_reached"
         )
         self.metrics = {
             "status": status,
             "theta": self.theta,
             "gamma": self.env.gamma,
+            "policy_stable": policy_stable,
+            "final_policy_evaluation_converged": evaluation_converged,
+            "final_policy_evaluation_residual": (
+                evaluation_residuals_per_improvement[-1][-1]
+                if evaluation_residuals_per_improvement[-1]
+                else None
+            ),
             "policy_improvement_iterations": len(policy_changes_per_iteration),
             "total_policy_evaluation_iterations": total_evaluation_iterations,
             "policy_evaluation_iterations_per_improvement": (
                 evaluation_iterations_per_improvement
+            ),
+            "policy_evaluation_converged_per_improvement": (
+                evaluation_converged_per_improvement
             ),
             "policy_evaluation_residuals_per_improvement": (
                 evaluation_residuals_per_improvement
@@ -196,7 +215,7 @@ class PolicyIteration:
         }
         return self.values, self.policy
 
-    def _evaluate_current_policy(self) -> tuple[int, list[float], int]:
+    def _evaluate_current_policy(self) -> tuple[int, list[float], int, bool]:
         """Evaluate the current deterministic policy in place."""
         residuals: list[float] = []
         bellman_backups = 0
@@ -222,9 +241,9 @@ class PolicyIteration:
 
             residuals.append(delta)
             if delta < self.theta:
-                return iteration, residuals, bellman_backups
+                return iteration, residuals, bellman_backups, True
 
-        return self.max_iterations, residuals, bellman_backups
+        return self.max_iterations, residuals, bellman_backups, False
 
     def get_value_function(self) -> ValueFunction:
         """Return the learned value function."""
