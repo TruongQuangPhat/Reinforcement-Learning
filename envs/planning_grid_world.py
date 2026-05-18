@@ -29,12 +29,12 @@ class PlanningGridWorld(GridWorldBase):
 
     def step(self, action: Action) -> tuple[State, float, bool, dict[str, Any]]:
         """Take one deterministic transition using the model helper."""
-        transition = self.transition_prob(self.current_state, action)[0]
+        transition = self.get_transitions(self.current_state, action)[0]
         _, next_state, reward, done = transition
         self.current_state = next_state
         return next_state, reward, done, {}
 
-    def transition_prob(self, state: State, action: Action) -> list[Transition]:
+    def get_transitions(self, state: State, action: Action) -> list[Transition]:
         """Return `(probability, next_state, reward, done)` transitions.
 
         TODO: Extend this method if the assignment requires stochastic movement

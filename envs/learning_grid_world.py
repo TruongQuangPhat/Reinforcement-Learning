@@ -40,18 +40,18 @@ class LearningGridWorld(GridWorldBase):
 
     def step(self, action: Action) -> tuple[State, float, bool, dict[str, Any]]:
         """Sample one transition for the given action."""
-        transitions = self._model.transition_prob(self.current_state, action)
+        transitions = self._model.get_transitions(self.current_state, action)
         probability, next_state, reward, done = self._sample_transition(transitions)
         self.current_state = next_state
         return next_state, reward, done, {"probability": probability}
 
-    def transition_prob(self, state: State, action: Action) -> list[Transition]:
+    def get_transitions(self, state: State, action: Action) -> list[Transition]:
         """Return model transitions for diagnostics, not for learner training.
 
         TODO: Keep learning agents decoupled from this method. It exists only to
         satisfy the shared environment interface and support tests/analysis.
         """
-        return self._model.transition_prob(state, action)
+        return self._model.get_transitions(state, action)
 
     def _sample_transition(self, transitions: list[Transition]) -> Transition:
         """Sample a transition from a probability distribution."""
