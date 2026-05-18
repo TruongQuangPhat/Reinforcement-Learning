@@ -1,26 +1,26 @@
 {
   "policy_evaluation": {
-    "wall_time_sec": 1.679999695625156e-05,
-    "cpu_time_sec": 1.2500000000005562e-05,
-    "current_memory_mb": 0.00038909912109375,
-    "peak_memory_mb": 0.00038909912109375
+    "wall_time_sec": 0.004574757000227692,
+    "cpu_time_sec": 0.004459100000000049,
+    "current_memory_mb": 0.018733978271484375,
+    "peak_memory_mb": 0.0209503173828125
   },
   "policy_iteration": {
-    "wall_time_sec": 3.7999998312443495e-06,
-    "cpu_time_sec": 3.7000000000023126e-06,
-    "current_memory_mb": 0.00038909912109375,
-    "peak_memory_mb": 0.00038909912109375
+    "wall_time_sec": 0.380505801000254,
+    "cpu_time_sec": 0.3709883999999999,
+    "current_memory_mb": 0.06898117065429688,
+    "peak_memory_mb": 0.06898117065429688
   },
   "value_iteration": {
-    "wall_time_sec": 3.4999975468963385e-06,
-    "cpu_time_sec": 3.5000000000035003e-06,
-    "current_memory_mb": 0.00038909912109375,
-    "peak_memory_mb": 0.00038909912109375
+    "wall_time_sec": 0.011558279999007937,
+    "cpu_time_sec": 0.011272699999999691,
+    "current_memory_mb": 0.01604938507080078,
+    "peak_memory_mb": 0.018258094787597656
   },
   "linear_programming": {
-    "wall_time_sec": 5.600006261374801e-06,
-    "cpu_time_sec": 5.600000000001437e-06,
-    "current_memory_mb": 0.00038909912109375,
-    "peak_memory_mb": 0.00038909912109375
+    "wall_time_sec": 0.01829513200027577,
+    "cpu_time_sec": 0.03837920000000006,
+    "current_memory_mb": 0.06337451934814453,
+    "peak_memory_mb": 0.4091005325317383
   }
 }

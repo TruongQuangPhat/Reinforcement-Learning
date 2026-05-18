@@ -1,14 +1,76 @@
 {
   "group": "planning",
-  "status": "skeleton_only",
+  "status": "completed",
   "algorithms": [
     "policy_evaluation",
     "policy_iteration",
     "value_iteration",
     "linear_programming"
   ],
-  "grid_size": [
-    8,
-    8
+  "metadata": {
+    "timestamp_utc": "2026-05-18T05:41:51.918618+00:00",
+    "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+    "numpy_version": "2.2.6",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "random_seed": 42,
+    "grid_size": [
+      8,
+      8
+    ],
+    "start_state": [
+      0,
+      0
+    ],
+    "goal_states": [
+      [
+        7,
+        7
+      ]
+    ],
+    "trap_states": [
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "wall_states": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "reward_config": {
+      "step": -1.0,
+      "goal": 10.0,
+      "trap": -10.0,
+      "wall": -1.0
+    },
+    "gamma": 0.99
+  },
+  "comparison_scope": "Policy Evaluation evaluates a fixed heuristic policy. Policy Iteration, Value Iteration, and Linear Programming solve for an optimal policy using the model.",
+  "fastest_fixed_policy_evaluation": "policy_evaluation",
+  "best_optimal_control_runtime_algorithm": "value_iteration",
+  "pi_vi_policy_agreement": 1.0,
+  "lp_vi_max_abs_error": 0.0,
+  "figure_paths": [
+    "report/figures/planning/policy_evaluation_values.png",
+    "report/figures/planning/fixed_policy_arrows.png",
+    "report/figures/planning/value_iteration_values.png",
+    "report/figures/planning/value_iteration_policy.png",
+    "report/figures/planning/value_iteration_residuals.png",
+    "report/figures/planning/policy_iteration_policy_changes.png",
+    "report/figures/planning/planning_runtime_comparison.png"
   ]
 }
