@@ -8,7 +8,7 @@
     "linear_programming"
   ],
   "metadata": {
-    "timestamp_utc": "2026-05-18T06:22:00.975003+00:00",
+    "timestamp_utc": "2026-05-18T06:30:03.001964+00:00",
     "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
     "numpy_version": "1.26.4",
     "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
@@ -61,7 +61,7 @@
   },
   "comparison_scope": "Policy Evaluation evaluates a fixed heuristic policy. Policy Iteration, Value Iteration, and Linear Programming solve for an optimal policy using the model.",
   "fastest_fixed_policy_evaluation": "policy_evaluation",
-  "best_optimal_control_runtime_algorithm": "value_iteration",
+  "best_optimal_control_runtime_algorithm": "linear_programming",
   "pi_vi_policy_agreement": 1.0,
   "lp_vi_max_abs_error": 0.0,
   "figure_paths": [
