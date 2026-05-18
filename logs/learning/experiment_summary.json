@@ -1,14 +1,67 @@
 {
   "group": "learning",
-  "status": "skeleton_only",
+  "status": "completed",
   "algorithms": [
     "td_zero",
     "td_lambda",
     "sarsa",
     "q_learning"
   ],
-  "grid_size": [
-    8,
-    8
-  ]
+  "best_control_by_average_return": "q_learning",
+  "lowest_td_prediction_error": "td_zero",
+  "figure_dir": "report\\figures\\learning",
+  "environment": {
+    "random_seed": 42,
+    "grid_size": [
+      8,
+      8
+    ],
+    "start_state": [
+      0,
+      0
+    ],
+    "goal_states": [
+      [
+        7,
+        7
+      ]
+    ],
+    "trap_states": [
+      [
+        3,
+        3
+      ],
+      [
+        4,
+        4
+      ]
+    ],
+    "wall_states": [
+      [
+        2,
+        2
+      ],
+      [
+        2,
+        3
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "reward_config": {
+      "step": -1.0,
+      "goal": 10.0,
+      "trap": -10.0,
+      "wall": -1.0
+    },
+    "gamma": 0.99
+  },
+  "metadata": {
+    "timestamp_utc": "2026-05-18T01:50:22.150973+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "numpy_version": "2.4.5",
+    "platform": "Windows-11-10.0.26200-SP0"
+  }
 }

@@ -85,3 +85,25 @@ Reinforcement-Learning/
 ```bash
 python3 run_experiments.py
 ```
+
+## Phần Learning Hiện Có
+
+`agents/learning.py` đã cài đặt bốn thuật toán model-free:
+
+- TD(0)
+- TD(lambda)
+- SARSA
+- Q-learning
+
+Khi chạy `python run_experiments.py`, phần learning sẽ lưu metrics vào
+`logs/learning/` và lưu hình trực quan vào `report/figures/learning/`, gồm
+learning curve, moving average return, TD error, value heatmap và policy arrows
+cho các thuật toán control. Các so sánh với baseline planning như
+`mse_vs_value_iteration` và `policy_agreement_vs_value_iteration` được giữ sẵn
+trong schema nhưng sẽ có giá trị sau khi phần planning hoàn thiện.
+
+Chạy test learning:
+
+```bash
+python -m unittest tests.test_learning
+```
