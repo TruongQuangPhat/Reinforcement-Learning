@@ -20,6 +20,20 @@ class GridWorldBase(ABC):
     """Base interface for finite Grid-world MDP environments."""
 
     VALID_ACTIONS: set[Action] = {"up", "down", "left", "right"}
+    DEFAULT_REWARD_CONFIG: dict[str, float] = {
+        "step": -1.0,
+        "goal": 10.0,
+        "trap": -10.0,
+        "wall": -1.0,
+    }
+    _ACTION_DELTAS: dict[Action, State] = {
+        "up": (-1, 0),
+        "down": (1, 0),
+        "left": (0, -1),
+        "right": (0, 1),
+    }
+    _DEFAULT_TRAP_CANDIDATES: tuple[State, ...] = ((3, 3), (4, 4))
+    _DEFAULT_WALL_CANDIDATES: tuple[State, ...] = ((2, 2), (2, 3), (5, 5))
 
     def __init__(
         self,
@@ -34,17 +48,15 @@ class GridWorldBase(ABC):
         seed: int | None = 42,
     ) -> None:
         self.grid_size = grid_size
+        self._validate_grid_size()
         self.start_state = start_state
-        self.goal_states = {(7, 7)} if goal_states is None else set(goal_states)
-        self.trap_states = {(3, 3), (4, 4)} if trap_states is None else set(trap_states)
-        self.wall_states = {(2, 2), (2, 3), (5, 5)} if wall_states is None else set(wall_states)
+        self.goal_states = self._default_goal_states() if goal_states is None else set(goal_states)
+        self.trap_states = self._default_trap_states() if trap_states is None else set(trap_states)
+        self.wall_states = self._default_wall_states() if wall_states is None else set(wall_states)
         self.actions = actions
-        self.reward_config = reward_config or {
-            "step": -1.0,
-            "goal": 10.0,
-            "trap": -10.0,
-            "wall": -1.0,
-        }
+        self.reward_config = dict(self.DEFAULT_REWARD_CONFIG)
+        if reward_config is not None:
+            self.reward_config.update(reward_config)
         self.gamma = gamma
         self.seed = seed
         self.current_state = start_state
@@ -54,12 +66,44 @@ class GridWorldBase(ABC):
         self.state_to_idx = {state: idx for idx, state in enumerate(self.states)}
         self.idx_to_state = {idx: state for state, idx in self.state_to_idx.items()}
 
-    def _validate_config(self) -> None:
-        """Validate Grid-world configuration before experiments run."""
-        rows, cols = self.grid_size
+    def _validate_grid_size(self) -> None:
+        """Validate grid dimensions before deriving default states."""
+        try:
+            rows, cols = self.grid_size
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"grid_size must be a pair of positive integers, got {self.grid_size}") from exc
+
+        if not isinstance(rows, int) or not isinstance(cols, int):
+            raise ValueError(f"grid_size must contain integers, got {self.grid_size}")
+
         if rows <= 0 or cols <= 0:
             raise ValueError(f"grid_size must contain positive dimensions, got {self.grid_size}")
 
+    def _default_goal_states(self) -> set[State]:
+        """Return the default goal at the bottom-right grid cell."""
+        rows, cols = self.grid_size
+        return {(rows - 1, cols - 1)}
+
+    def _default_trap_states(self) -> set[State]:
+        """Return default traps that fit the current grid without overlapping goals."""
+        blocked = self.goal_states | {self.start_state}
+        return {
+            state
+            for state in self._DEFAULT_TRAP_CANDIDATES
+            if self.in_bounds(state) and state not in blocked
+        }
+
+    def _default_wall_states(self) -> set[State]:
+        """Return default walls that fit the current grid without overlapping key states."""
+        blocked = self.goal_states | self.trap_states | {self.start_state}
+        return {
+            state
+            for state in self._DEFAULT_WALL_CANDIDATES
+            if self.in_bounds(state) and state not in blocked
+        }
+
+    def _validate_config(self) -> None:
+        """Validate Grid-world configuration before experiments run."""
         if not self.in_bounds(self.start_state):
             raise ValueError(f"start_state {self.start_state} is outside grid {self.grid_size}")
 
@@ -92,6 +136,11 @@ class GridWorldBase(ABC):
         if invalid_actions:
             raise ValueError(f"actions contain invalid values: {invalid_actions}")
 
+        for key in self.DEFAULT_REWARD_CONFIG:
+            reward = self.reward_config.get(key)
+            if not isinstance(reward, (int, float)):
+                raise ValueError(f"reward_config[{key!r}] must be numeric, got {reward!r}")
+
     def _build_states(self) -> list[State]:
         """Build all valid non-wall states once in stable row-major order."""
         rows, cols = self.grid_size
@@ -111,6 +160,28 @@ class GridWorldBase(ABC):
         if state is not None and (self.is_terminal(state) or self.is_wall(state)):
             return ()
         return self.actions
+
+    def _candidate_next_state(self, state: State, action: Action) -> State:
+        """Compute the deterministic next state for a candidate action."""
+        self._validate_action(action)
+        row_delta, col_delta = self._ACTION_DELTAS[action]
+        candidate = (state[0] + row_delta, state[1] + col_delta)
+        if not self.in_bounds(candidate) or self.is_wall(candidate):
+            return state
+        return candidate
+
+    def _validate_action(self, action: Action) -> None:
+        """Raise when an action is not part of this environment's action set."""
+        if action not in self.actions:
+            raise ValueError(f"Unknown action {action!r}; expected one of {self.actions}")
+
+    def _reward_for(self, state: State) -> float:
+        """Return immediate reward for entering a state."""
+        if state in self.goal_states:
+            return self.reward_config["goal"]
+        if state in self.trap_states:
+            return self.reward_config["trap"]
+        return self.reward_config["step"]
 
     def state_to_index(self, state: State) -> int:
         """Return the cached integer index for a state."""
@@ -174,7 +245,3 @@ class GridWorldBase(ABC):
     @abstractmethod
     def step(self, action: Action) -> tuple[State, float, bool, dict[str, Any]]:
         """Apply an action and return `(next_state, reward, done, info)`."""
-
-    @abstractmethod
-    def get_transitions(self, state: State, action: Action) -> list[Transition]:
-        """Return model transitions `(probability, next_state, reward, done)`."""
