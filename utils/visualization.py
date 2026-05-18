@@ -66,6 +66,37 @@ def plot_learning_curve(episode_returns: list[float], title: str, save_path: str
     _plot_line(episode_returns, title, "Episode", "Return", save_path)
 
 
+def plot_moving_average(values: list[float], title: str, save_path: str | Path) -> None:
+    """Plot a moving-average learning curve."""
+    _plot_line(values, title, "Episode", "Moving average return", save_path)
+
+
+def plot_episode_steps(episode_steps: list[int], title: str, save_path: str | Path) -> None:
+    """Plot episode length over training episodes."""
+    _plot_line(episode_steps, title, "Episode", "Steps", save_path)
+
+
+def plot_td_error_curve(td_errors: list[float], title: str, save_path: str | Path) -> None:
+    """Plot absolute TD error values over updates."""
+    _plot_line([abs(error) for error in td_errors], title, "Update", "Absolute TD error", save_path)
+
+
+def plot_success_trap_rates(
+    rates: dict[str, float],
+    title: str,
+    save_path: str | Path,
+) -> None:
+    """Plot final success/trap/timeout rates for a learner."""
+    _ensure_parent(save_path)
+    _, axis = plt.subplots()
+    axis.bar(list(rates.keys()), list(rates.values()), color=["#2ca02c", "#d62728", "#7f7f7f"])
+    axis.set_ylim(0.0, 1.0)
+    axis.set_title(title)
+    axis.set_ylabel("Rate")
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()
+
+
 def plot_bellman_residual(residuals: list[float], title: str, save_path: str | Path) -> None:
     """Plot Bellman residual values over iterations."""
     _plot_line(residuals, title, "Iteration", "Bellman residual", save_path)
