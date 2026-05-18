@@ -7,10 +7,11 @@
     "sarsa",
     "q_learning"
   ],
-  "best_control_by_average_return": "q_learning",
-  "lowest_td_prediction_error": "td_zero",
-  "figure_dir": "report\\figures\\learning",
-  "environment": {
+  "metadata": {
+    "timestamp_utc": "2026-05-18T06:22:10.957316+00:00",
+    "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
+    "numpy_version": "1.26.4",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
     "random_seed": 42,
     "grid_size": [
       8,
@@ -58,10 +59,27 @@
     },
     "gamma": 0.99
   },
-  "metadata": {
-    "timestamp_utc": "2026-05-18T01:50:22.150973+00:00",
-    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
-    "numpy_version": "2.4.5",
-    "platform": "Windows-11-10.0.26200-SP0"
-  }
+  "comparison_scope": "TD(0) and TD(lambda) are compared against Policy Evaluation. SARSA and Q-learning are compared against Value Iteration.",
+  "best_control_by_average_return": "q_learning",
+  "lowest_td_prediction_error": "td_zero",
+  "planning_baselines": {
+    "policy_evaluation": {
+      "status": "converged",
+      "iterations": 567
+    },
+    "value_iteration": {
+      "status": "converged",
+      "iterations": 15
+    }
+  },
+  "figure_dir": "report/figures/learning",
+  "comparison_figure_paths": [
+    "report/figures/learning/td_prediction_mse_vs_policy_evaluation.png",
+    "report/figures/learning/td_final_error_comparison.png",
+    "report/figures/learning/control_average_return_comparison.png",
+    "report/figures/learning/control_success_rate_comparison.png",
+    "report/figures/learning/control_trap_rate_comparison.png",
+    "report/figures/learning/control_mse_vs_value_iteration.png",
+    "report/figures/learning/control_policy_agreement_vs_value_iteration.png"
+  ]
 }

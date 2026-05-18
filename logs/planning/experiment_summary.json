@@ -8,7 +8,7 @@
     "linear_programming"
   ],
   "metadata": {
-    "timestamp_utc": "2026-05-18T05:48:33.991638+00:00",
+    "timestamp_utc": "2026-05-18T06:22:00.975003+00:00",
     "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
     "numpy_version": "1.26.4",
     "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
@@ -67,8 +67,12 @@
   "figure_paths": [
     "report/figures/planning/policy_evaluation_values.png",
     "report/figures/planning/fixed_policy_arrows.png",
+    "report/figures/planning/policy_iteration_values.png",
+    "report/figures/planning/policy_iteration_policy.png",
     "report/figures/planning/value_iteration_values.png",
     "report/figures/planning/value_iteration_policy.png",
+    "report/figures/planning/linear_programming_values.png",
+    "report/figures/planning/linear_programming_policy.png",
     "report/figures/planning/value_iteration_residuals.png",
     "report/figures/planning/policy_iteration_policy_changes.png",
     "report/figures/planning/planning_runtime_comparison.png"
