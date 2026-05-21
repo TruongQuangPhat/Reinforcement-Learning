@@ -42,6 +42,7 @@ from utils.visualization import (
     plot_learning_curve,
     plot_moving_average,
     plot_policy_arrows,
+    plot_policy_changes,
     plot_sensitivity_bar_or_line,
     plot_success_trap_rates,
     plot_success_trap_curves,
@@ -1164,10 +1165,11 @@ def _save_planning_figures(
         "Value Iteration Bellman Residual",
         figure_paths[8],
     )
-    plot_bellman_residual(
+    plot_policy_changes(
         planners["policy_iteration"].get_metrics()["policy_changes_per_iteration"],
-        "Policy Iteration Policy Changes",
-        figure_paths[9],
+        title="Policy Iteration - Policy Changes per Iteration",
+        save_path=figure_paths[9],
+        show=False,
     )
     plot_comparison_bar(
         {

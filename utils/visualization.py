@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
 from typing import Any
 
 import matplotlib.pyplot as plt
+from matplotlib.patches import Rectangle
 import numpy as np
 import seaborn as sns
 
@@ -16,6 +18,16 @@ COOL_GRID_COLOR = "#D8EEF2"
 COOL_TEXT_COLOR = "#1F3A4A"
 COOL_BAR_PALETTE = ["#7CC7E8", "#79D6C9", "#A7E8BD", "#8AB6F9", "#9ADBC5"]
 COOL_HEATMAP_CMAP = sns.color_palette("crest", as_cmap=True)
+GRID_LAYOUT_COLORS = {
+    "normal": "#F8FCFD",
+    "start": "#7CC7E8",
+    "goal": "#8DE0B7",
+    "trap": "#F2A08B",
+    "wall": "#556B78",
+    "edge": COOL_GRID_COLOR,
+    "text": COOL_TEXT_COLOR,
+    "light_text": "white",
+}
 
 sns.set_theme(
     context="notebook",
@@ -32,19 +44,99 @@ sns.set_theme(
 )
 
 
+def plot_grid_world_layout(
+    env: Any,
+    title: str = "Grid-world 8x8 Layout",
+    save_path: str | Path | None = None,
+    show: bool = False,
+) -> tuple[Any, Any]:
+    """Plot the static Grid-world layout with start, goal, trap, and wall cells."""
+    if save_path is not None:
+        _ensure_parent(save_path)
+
+    rows, cols = env.grid_size
+    figure, axis = plt.subplots(figsize=(6.4, 5.2))
+    axis.set_facecolor(GRID_LAYOUT_COLORS["normal"])
+
+    for row in range(rows):
+        for col in range(cols):
+            state = (row, col)
+            fill_color = GRID_LAYOUT_COLORS["normal"]
+            label = ""
+            text_color = GRID_LAYOUT_COLORS["text"]
+
+            if state == env.start_state:
+                fill_color = GRID_LAYOUT_COLORS["start"]
+                label = "S"
+                text_color = GRID_LAYOUT_COLORS["light_text"]
+            elif state in env.goal_states:
+                fill_color = GRID_LAYOUT_COLORS["goal"]
+                label = "G"
+                text_color = GRID_LAYOUT_COLORS["text"]
+            elif state in env.trap_states:
+                fill_color = GRID_LAYOUT_COLORS["trap"]
+                label = "T"
+                text_color = GRID_LAYOUT_COLORS["text"]
+            elif state in env.wall_states:
+                fill_color = GRID_LAYOUT_COLORS["wall"]
+                label = "W"
+                text_color = GRID_LAYOUT_COLORS["light_text"]
+
+            axis.add_patch(
+                Rectangle(
+                    (col, row),
+                    1,
+                    1,
+                    facecolor=fill_color,
+                    edgecolor=GRID_LAYOUT_COLORS["edge"],
+                    linewidth=0.9,
+                )
+            )
+            if label:
+                axis.text(
+                    col + 0.5,
+                    row + 0.5,
+                    label,
+                    ha="center",
+                    va="center",
+                    color=text_color,
+                    fontsize=13,
+                    fontweight="bold",
+                )
+
+    axis.set_title(title)
+    axis.set_xlabel("Column")
+    axis.set_ylabel("Row")
+    axis.set_xlim(0, cols)
+    axis.set_ylim(rows, 0)
+    axis.set_aspect("equal")
+    axis.set_xticks([col + 0.5 for col in range(cols)])
+    axis.set_xticklabels(range(cols), rotation=0)
+    axis.set_yticks([row + 0.5 for row in range(rows)])
+    axis.set_yticklabels(range(rows), rotation=0)
+    axis.tick_params(length=0)
+    for spine in axis.spines.values():
+        spine.set_visible(False)
+
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
+
+
 def plot_value_heatmap(
     values: dict[State, float],
     env: Any,
     title: str,
-    save_path: str | Path,
-) -> None:
+    save_path: str | Path | None = None,
+    show: bool = False,
+) -> tuple[Any, Any]:
     """Plot a value-function heatmap and save it to disk."""
-    _ensure_parent(save_path)
+    if save_path is not None:
+        _ensure_parent(save_path)
     grid = np.full(env.grid_size, np.nan)
     for state, value in values.items():
         grid[state] = value
 
-    _, axis = plt.subplots(figsize=(6.4, 5.2))
+    figure, axis = plt.subplots(figsize=(6.4, 5.2))
     sns.heatmap(
         grid,
         ax=axis,
@@ -60,20 +152,22 @@ def plot_value_heatmap(
     axis.set_xticklabels(range(env.grid_size[1]), rotation=0)
     axis.set_yticklabels(range(env.grid_size[0]), rotation=0)
     _annotate_special_states(axis, env)
-    plt.savefig(save_path, bbox_inches="tight")
-    plt.close()
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
 
 
 def plot_policy_arrows(
     policy: dict[State, str],
     env: Any,
     title: str,
-    save_path: str | Path,
-) -> None:
+    save_path: str | Path | None = None,
+    show: bool = False,
+) -> tuple[Any, Any]:
     """Plot a simple policy-arrow grid and save it to disk."""
-    _ensure_parent(save_path)
+    if save_path is not None:
+        _ensure_parent(save_path)
     arrow_map = {"up": "^", "down": "v", "left": "<", "right": ">"}
-    _, axis = plt.subplots(figsize=(6.4, 5.2))
+    figure, axis = plt.subplots(figsize=(6.4, 5.2))
     background = np.zeros(env.grid_size)
     sns.heatmap(
         background,
@@ -101,8 +195,8 @@ def plot_policy_arrows(
             fontweight="bold",
         )
     _annotate_special_states(axis, env)
-    plt.savefig(save_path, bbox_inches="tight")
-    plt.close()
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
 
 
 def plot_learning_curve(episode_returns: list[float], title: str, save_path: str | Path) -> None:
@@ -213,20 +307,58 @@ def plot_success_trap_rates(
     plt.close()
 
 
-def plot_bellman_residual(residuals: list[float], title: str, save_path: str | Path) -> None:
+def plot_bellman_residual(
+    residuals: list[float],
+    title: str,
+    save_path: str | Path | None = None,
+    show: bool = False,
+) -> tuple[Any, Any]:
     """Plot Bellman residual values over iterations."""
-    _plot_line(residuals, title, "Iteration", "Bellman residual", save_path)
+    return _plot_line(residuals, title, "Iteration", "Bellman residual", save_path, show)
+
+
+def plot_policy_changes(
+    policy_changes: Sequence[int],
+    title: str = "Policy Iteration - Policy Changes per Iteration",
+    save_path: str | Path | None = None,
+    show: bool = False,
+) -> tuple[Any, Any]:
+    """Plot changed-action counts over policy improvement iterations."""
+    if save_path is not None:
+        _ensure_parent(save_path)
+
+    figure, axis = plt.subplots(figsize=(7.0, 4.4))
+    iterations = list(range(1, len(policy_changes) + 1))
+    sns.lineplot(
+        x=iterations,
+        y=policy_changes,
+        ax=axis,
+        color=COOL_LINE_COLOR,
+        linewidth=2.2,
+        marker="o",
+    )
+    axis.set_title(title)
+    axis.set_xlabel("Policy improvement iteration")
+    axis.set_ylabel("Number of changed states")
+    if iterations:
+        axis.set_xticks(iterations)
+    _polish_axis(axis)
+
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
 
 
 def plot_comparison_bar(
     metrics: dict[str, float],
     title: str,
-    save_path: str | Path,
+    save_path: str | Path | None = None,
     ylabel: str = "Value",
-) -> None:
+    show: bool = False,
+) -> tuple[Any, Any]:
     """Plot a bar chart comparing scalar metrics across algorithms."""
-    _ensure_parent(save_path)
-    _, axis = plt.subplots(figsize=(6.8, 4.4))
+    if save_path is not None:
+        _ensure_parent(save_path)
+    figure, axis = plt.subplots(figsize=(6.8, 4.4))
     labels = list(metrics.keys())
     sns.barplot(
         x=labels,
@@ -240,8 +372,8 @@ def plot_comparison_bar(
     axis.set_ylabel(ylabel)
     axis.tick_params(axis="x", rotation=30)
     _polish_axis(axis)
-    plt.savefig(save_path, bbox_inches="tight")
-    plt.close()
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
 
 
 def _plot_line(
@@ -249,11 +381,13 @@ def _plot_line(
     title: str,
     xlabel: str,
     ylabel: str,
-    save_path: str | Path,
-) -> None:
+    save_path: str | Path | None,
+    show: bool = False,
+) -> tuple[Any, Any]:
     """Plot a generic line chart."""
-    _ensure_parent(save_path)
-    _, axis = plt.subplots(figsize=(7.0, 4.4))
+    if save_path is not None:
+        _ensure_parent(save_path)
+    figure, axis = plt.subplots(figsize=(7.0, 4.4))
     sns.lineplot(
         x=list(range(len(values))),
         y=values,
@@ -265,8 +399,8 @@ def _plot_line(
     axis.set_xlabel(xlabel)
     axis.set_ylabel(ylabel)
     _polish_axis(axis)
-    plt.savefig(save_path, bbox_inches="tight")
-    plt.close()
+    _finalize_figure(figure, save_path, show)
+    return figure, axis
 
 
 def _plot_xy_line(
@@ -348,3 +482,13 @@ def _polish_axis(axis: Any) -> None:
 def _ensure_parent(save_path: str | Path) -> None:
     """Create the parent directory for an output figure."""
     Path(save_path).parent.mkdir(parents=True, exist_ok=True)
+
+
+def _finalize_figure(figure: Any, save_path: str | Path | None, show: bool) -> None:
+    """Save and optionally display a Matplotlib figure."""
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches="tight")
+    if show:
+        plt.show()
+    else:
+        plt.close(figure)
