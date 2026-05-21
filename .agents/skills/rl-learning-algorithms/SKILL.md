@@ -23,7 +23,7 @@ Learning algorithms should use:
 - env.get_actions(state)
 - env.is_terminal(state)
 
-Do not call env.transition_prob() inside learning algorithms, except in tests or evaluation comparisons.
+Do not call env.get_transitions() inside learning algorithms, except in tests or evaluation comparisons.
 
 ## Mathematical requirements
 
@@ -75,8 +75,12 @@ For SARSA and Q-learning:
 - episode_returns
 - moving_average_returns
 - episode_steps
-- success_rate
-- trap_rate
+- training_avg_return
+- final_window_avg_return
+- training_success_rate
+- final_window_success_rate
+- training_trap_rate
+- final_window_trap_rate
 - average_steps
 - td_errors
 - policy_agreement_vs_value_iteration

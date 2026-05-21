@@ -21,7 +21,7 @@ Environment tests:
 - step() respects walls and boundaries
 - terminal states end episodes
 - rewards match the reward configuration
-- transition_prob() probabilities sum to 1
+- get_transitions() probabilities sum to 1
 - deterministic transition has exactly one probability-1 outcome
 
 Planning tests:

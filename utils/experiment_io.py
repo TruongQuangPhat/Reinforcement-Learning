@@ -6,6 +6,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from utils.logging_utils import log_message
+
 
 def ensure_dir(path: str | Path) -> Path:
     """Create a directory if it does not already exist."""
@@ -27,6 +29,11 @@ def load_json(path: str | Path) -> Any:
     """Load JSON data from disk."""
     with Path(path).open("r", encoding="utf-8") as file:
         return json.load(file)
+
+
+def log_progress(message: str, verbose: int, min_verbose: int = 1) -> None:
+    """Print a concise progress message when verbosity is high enough."""
+    log_message(message, verbose, min_verbose)
 
 
 def save_experiment_logs(

@@ -47,8 +47,13 @@ class ExperimentRunnerTests(unittest.TestCase):
 
                 learning_metrics = self._load_json("logs/learning/training_metrics.json")
                 self.assertIn("mse_vs_policy_evaluation", learning_metrics["td_zero"])
+                self.assertIn(
+                    "mse_vs_policy_evaluation_checkpoints",
+                    learning_metrics["td_zero"],
+                )
                 self.assertIn("mse_vs_policy_evaluation", learning_metrics["td_lambda"])
                 self.assertIn("mse_vs_value_iteration", learning_metrics["sarsa"])
+                self.assertIn("window_success_rates", learning_metrics["sarsa"])
                 self.assertIn("mse_vs_value_iteration", learning_metrics["q_learning"])
                 self.assertIn(
                     "policy_agreement_vs_value_iteration",
@@ -57,6 +62,16 @@ class ExperimentRunnerTests(unittest.TestCase):
                 self.assertIn(
                     "policy_agreement_vs_value_iteration",
                     learning_metrics["q_learning"],
+                )
+                planning_metrics = self._load_json("logs/planning/training_metrics.json")
+                self.assertIn("planning_comparison", planning_metrics)
+                self.assertIn(
+                    "value_error_pi_vs_vi_inf_norm",
+                    planning_metrics["planning_comparison"],
+                )
+                self.assertIn(
+                    "value_mse_lp_vs_vi",
+                    planning_metrics["planning_comparison"],
                 )
             finally:
                 os.chdir(old_cwd)

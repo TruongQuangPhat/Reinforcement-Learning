@@ -11,8 +11,8 @@ from envs.learning_grid_world import LearningGridWorld
 class GuardedLearningGridWorld(LearningGridWorld):
     """Learning environment that fails if learners query the model directly."""
 
-    def transition_prob(self, state, action):  # type: ignore[no-untyped-def]
-        raise AssertionError("Learning agents must not call transition_prob().")
+    def get_transitions(self, state, action):  # type: ignore[no-untyped-def]
+        raise AssertionError("Learning agents must not call get_transitions().")
 
 
 class LearningAlgorithmTests(unittest.TestCase):
@@ -46,8 +46,17 @@ class LearningAlgorithmTests(unittest.TestCase):
             "episode_returns",
             "moving_average_returns",
             "episode_steps",
-            "success_rate",
-            "trap_rate",
+            "training_avg_return",
+            "final_window_avg_return",
+            "training_success_rate",
+            "final_window_success_rate",
+            "training_trap_rate",
+            "final_window_trap_rate",
+            "window_success_rates",
+            "window_trap_rates",
+            "window_metric_episodes",
+            "epsilon_history",
+            "final_epsilon",
             "td_errors",
             "learned_policy",
             "environment_steps",
@@ -65,8 +74,11 @@ class LearningAlgorithmTests(unittest.TestCase):
             "episodes",
             "environment_steps",
             "mean_absolute_td_error_per_episode",
+            "td_errors",
             "final_mean_absolute_td_error",
             "mse_vs_policy_evaluation",
+            "mse_vs_policy_evaluation_checkpoints",
+            "mse_checkpoint_episodes",
             "value_function",
             "runtime_sec",
             "cpu_time_sec",
@@ -131,6 +143,24 @@ class LearningAlgorithmTests(unittest.TestCase):
         learner.train()
 
         self.assertEqual(learner.get_q_table()[(env.start_state, "up")], -0.5)
+
+    def test_q_learning_optional_epsilon_decay_records_history(self) -> None:
+        env = GuardedLearningGridWorld(seed=10)
+        learner = QLearning(
+            env,
+            epsilon=0.2,
+            epsilon_decay=0.5,
+            epsilon_min=0.05,
+            episodes=3,
+            max_steps_per_episode=1,
+            seed=10,
+        )
+
+        learner.train()
+        metrics = learner.get_metrics()
+
+        self.assertEqual(metrics["epsilon_history"], [0.2, 0.1, 0.05])
+        self.assertEqual(metrics["final_epsilon"], 0.05)
 
     def test_sarsa_one_step_update_has_expected_value(self) -> None:
         env = GuardedLearningGridWorld(seed=9)

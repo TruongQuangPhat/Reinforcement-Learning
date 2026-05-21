@@ -72,7 +72,7 @@ Reinforcement-Learning/
 ## OOP design rules
 
 1. `envs/grid_world.py` should define the shared abstract/base interface.
-2. `PlanningGridWorld` should expose full model access: `get_states()`, `get_actions(state)`, `transition_prob(state, action)`.
+2. `PlanningGridWorld` should expose full model access: `get_states()`, `get_actions(state)`, `get_transitions(state, action)`.
 3. `LearningGridWorld` should expose sample-based interaction: `reset()`, `step(action)`, `is_terminal(state)`.
 4. `agents/planning.py` should contain planning classes only.
 5. `agents/learning.py` should contain learning classes only.

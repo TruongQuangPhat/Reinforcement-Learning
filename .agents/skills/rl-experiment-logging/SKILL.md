@@ -72,8 +72,12 @@ Learning:
 - episode_returns
 - moving_average_returns
 - episode_steps
-- success_rate
-- trap_rate
+- training_avg_return
+- final_window_avg_return
+- training_success_rate
+- final_window_success_rate
+- training_trap_rate
+- final_window_trap_rate
 - td_errors
 - mse_vs_planning_baseline
 - policy_agreement_vs_value_iteration
