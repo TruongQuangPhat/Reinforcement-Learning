@@ -20,7 +20,7 @@ Algorithms:
 Planning algorithms should use:
 - env.get_states()
 - env.get_actions(state)
-- env.transition_prob(state, action)
+- env.get_transitions(state, action)
 
 Expected transition tuple:
 (probability, next_state, reward, done)

@@ -1,0 +1,48 @@
+{
+  "status": "completed",
+  "gamma_values": [
+    0.5,
+    0.7,
+    0.9,
+    0.99
+  ],
+  "metrics": [
+    {
+      "gamma": 0.5,
+      "iterations": 15,
+      "final_residual": 0.0,
+      "bellman_backups": 870,
+      "runtime": 0.008744867999666894
+    },
+    {
+      "gamma": 0.7,
+      "iterations": 15,
+      "final_residual": 0.0,
+      "bellman_backups": 870,
+      "runtime": 0.011613558999670204
+    },
+    {
+      "gamma": 0.9,
+      "iterations": 15,
+      "final_residual": 0.0,
+      "bellman_backups": 870,
+      "runtime": 0.009162008999737736
+    },
+    {
+      "gamma": 0.99,
+      "iterations": 15,
+      "final_residual": 0.0,
+      "bellman_backups": 870,
+      "runtime": 0.008779093000157445
+    }
+  ],
+  "figure_paths": [
+    "report/figures/planning/value_iteration_gamma_sensitivity_iterations.png"
+  ],
+  "fastest_gamma": 0.5,
+  "min_iterations": 15,
+  "fastest_runtime": 0.008744867999666894,
+  "slowest_gamma": 0.5,
+  "max_iterations": 15,
+  "slowest_runtime": 0.008744867999666894
+}

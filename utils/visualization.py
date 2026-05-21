@@ -131,6 +131,64 @@ def plot_td_error_curve(td_errors: list[float], title: str, save_path: str | Pat
     )
 
 
+def plot_td_mse_curve(
+    episodes: list[int],
+    mse_values: list[float],
+    title: str,
+    save_path: str | Path,
+) -> None:
+    """Plot TD prediction MSE against a Policy Evaluation baseline."""
+    _plot_xy_line(episodes, mse_values, title, "Episode", "MSE vs PE", save_path)
+
+
+def plot_success_trap_curves(
+    episodes: list[int],
+    success_rates: list[float],
+    trap_rates: list[float],
+    title: str,
+    save_path: str | Path,
+) -> None:
+    """Plot trailing-window success and trap rates over episodes."""
+    _ensure_parent(save_path)
+    _, axis = plt.subplots(figsize=(7.0, 4.4))
+    sns.lineplot(
+        x=episodes,
+        y=success_rates,
+        ax=axis,
+        label="success",
+        color="#2A9D8F",
+        linewidth=2.2,
+    )
+    sns.lineplot(
+        x=episodes,
+        y=trap_rates,
+        ax=axis,
+        label="trap",
+        color="#E76F51",
+        linewidth=2.2,
+    )
+    axis.set_ylim(0.0, 1.0)
+    axis.set_title(title)
+    axis.set_xlabel("Episode")
+    axis.set_ylabel("Trailing-window rate")
+    axis.legend()
+    _polish_axis(axis)
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()
+
+
+def plot_sensitivity_bar_or_line(
+    x_values: list[float],
+    y_values: list[float],
+    title: str,
+    save_path: str | Path,
+    xlabel: str,
+    ylabel: str,
+) -> None:
+    """Plot a simple sensitivity curve for one scalar metric."""
+    _plot_xy_line(x_values, y_values, title, xlabel, ylabel, save_path)
+
+
 def plot_success_trap_rates(
     rates: dict[str, float],
     title: str,
@@ -202,6 +260,33 @@ def _plot_line(
         ax=axis,
         color=COOL_LINE_COLOR,
         linewidth=2.2,
+    )
+    axis.set_title(title)
+    axis.set_xlabel(xlabel)
+    axis.set_ylabel(ylabel)
+    _polish_axis(axis)
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()
+
+
+def _plot_xy_line(
+    x_values: list[int] | list[float],
+    y_values: list[float],
+    title: str,
+    xlabel: str,
+    ylabel: str,
+    save_path: str | Path,
+) -> None:
+    """Plot a generic line chart with explicit x values."""
+    _ensure_parent(save_path)
+    _, axis = plt.subplots(figsize=(7.0, 4.4))
+    sns.lineplot(
+        x=x_values,
+        y=y_values,
+        ax=axis,
+        color=COOL_LINE_COLOR,
+        linewidth=2.2,
+        marker="o",
     )
     axis.set_title(title)
     axis.set_xlabel(xlabel)

@@ -1,0 +1,55 @@
+{
+  "status": "completed",
+  "episodes_per_run": 300,
+  "lambda_values": [
+    0.0,
+    0.3,
+    0.5,
+    0.7,
+    0.9
+  ],
+  "metrics": [
+    {
+      "lambda": 0.0,
+      "final_mse_vs_pe": 219.64179604724092,
+      "final_td_error": 1.6586587937877884,
+      "runtime": 1.0048722949995863,
+      "environment_steps": 25448
+    },
+    {
+      "lambda": 0.3,
+      "final_mse_vs_pe": 120.5652064874402,
+      "final_td_error": 1.6966951774617898,
+      "runtime": 1.009277029000259,
+      "environment_steps": 25448
+    },
+    {
+      "lambda": 0.5,
+      "final_mse_vs_pe": 63.02102220217648,
+      "final_td_error": 1.708516204286819,
+      "runtime": 0.9852151470004173,
+      "environment_steps": 25448
+    },
+    {
+      "lambda": 0.7,
+      "final_mse_vs_pe": 26.281642971789925,
+      "final_td_error": 1.6732902500347588,
+      "runtime": 1.0414269550001336,
+      "environment_steps": 25448
+    },
+    {
+      "lambda": 0.9,
+      "final_mse_vs_pe": 41.2363335127071,
+      "final_td_error": 1.6944247405528887,
+      "runtime": 1.0790342689997487,
+      "environment_steps": 25448
+    }
+  ],
+  "figure_paths": [
+    "report/figures/learning/td_lambda_sensitivity_mse.png"
+  ],
+  "best_lambda_by_mse": 0.7,
+  "best_mse_vs_pe": 26.281642971789925,
+  "best_final_td_error": 1.6732902500347588,
+  "best_runtime": 1.0414269550001336
+}

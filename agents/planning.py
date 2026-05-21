@@ -8,6 +8,12 @@ from scipy.optimize import linprog
 
 from envs.grid_world import Action, State
 from envs.planning_grid_world import PlanningGridWorld
+from utils.logging_utils import (
+    format_scientific,
+    log_message,
+    print_progress_header,
+    print_progress_row,
+)
 
 Policy: TypeAlias = dict[State, Action | dict[Action, float]]
 ValueFunction: TypeAlias = dict[State, float]
@@ -26,6 +32,8 @@ class PolicyEvaluation:
         policy: Policy | None = None,
         theta: float = 1e-6,
         max_iterations: int = 1_000,
+        verbose: int = 0,
+        log_interval: int = 10,
     ) -> None:
         if theta <= 0.0:
             raise ValueError(f"theta must be positive, got {theta}")
@@ -36,6 +44,8 @@ class PolicyEvaluation:
         self.policy = policy or self._uniform_random_policy()
         self.theta = theta
         self.max_iterations = max_iterations
+        self.verbose = verbose
+        self.log_interval = _validated_log_interval(log_interval)
         self.values: ValueFunction = {state: 0.0 for state in env.get_states()}
         self.metrics: dict[str, Any] = {}
 
@@ -43,6 +53,7 @@ class PolicyEvaluation:
         """Run iterative policy evaluation until convergence or iteration cap."""
         bellman_residuals: list[float] = []
         bellman_backups = 0
+        progress_header_printed = False
 
         for iteration in range(1, self.max_iterations + 1):
             old_values = dict(self.values)
@@ -68,6 +79,11 @@ class PolicyEvaluation:
                 delta = max(delta, abs(old_values[state] - new_value))
 
             bellman_residuals.append(delta)
+            if iteration % self.log_interval == 0 or delta < self.theta:
+                if not progress_header_printed:
+                    _print_planning_progress_header("PolicyEvaluation", self.verbose)
+                    progress_header_printed = True
+                _print_planning_progress_row(iteration, delta, bellman_backups, self.verbose)
             if delta < self.theta:
                 break
 
@@ -124,6 +140,8 @@ class PolicyIteration:
         env: PlanningGridWorld,
         theta: float = 1e-6,
         max_iterations: int = 1_000,
+        verbose: int = 0,
+        log_interval: int = 10,
     ) -> None:
         if theta <= 0.0:
             raise ValueError(f"theta must be positive, got {theta}")
@@ -133,6 +151,8 @@ class PolicyIteration:
         self.env = env
         self.theta = theta
         self.max_iterations = max_iterations
+        self.verbose = verbose
+        self.log_interval = _validated_log_interval(log_interval)
         self.values: ValueFunction = {state: 0.0 for state in env.get_states()}
         self.policy: Policy = _initial_deterministic_policy(env)
         self.metrics: dict[str, Any] = {}
@@ -147,6 +167,7 @@ class PolicyIteration:
         bellman_backups = 0
         policy_stable = False
         evaluation_converged = False
+        progress_header_printed = False
 
         for improvement_iteration in range(1, self.max_iterations + 1):
             (
@@ -178,6 +199,21 @@ class PolicyIteration:
 
             self.policy = new_policy
             policy_changes_per_iteration.append(policy_changes)
+            should_log = (
+                improvement_iteration % self.log_interval == 0
+                or (policy_stable and evaluation_converged)
+            )
+            if should_log:
+                final_residual = eval_residuals[-1] if eval_residuals else 0.0
+                if not progress_header_printed:
+                    _print_planning_progress_header("PolicyIteration", self.verbose)
+                    progress_header_printed = True
+                _print_planning_progress_row(
+                    improvement_iteration,
+                    final_residual,
+                    bellman_backups,
+                    self.verbose,
+                )
             if policy_stable and evaluation_converged:
                 break
 
@@ -193,6 +229,11 @@ class PolicyIteration:
             "policy_stable": policy_stable,
             "final_policy_evaluation_converged": evaluation_converged,
             "final_policy_evaluation_residual": (
+                evaluation_residuals_per_improvement[-1][-1]
+                if evaluation_residuals_per_improvement[-1]
+                else None
+            ),
+            "final_bellman_residual": (
                 evaluation_residuals_per_improvement[-1][-1]
                 if evaluation_residuals_per_improvement[-1]
                 else None
@@ -270,6 +311,8 @@ class ValueIteration:
         env: PlanningGridWorld,
         theta: float = 1e-6,
         max_iterations: int = 1_000,
+        verbose: int = 0,
+        log_interval: int = 10,
     ) -> None:
         if theta <= 0.0:
             raise ValueError(f"theta must be positive, got {theta}")
@@ -279,6 +322,8 @@ class ValueIteration:
         self.env = env
         self.theta = theta
         self.max_iterations = max_iterations
+        self.verbose = verbose
+        self.log_interval = _validated_log_interval(log_interval)
         self.values: ValueFunction = {state: 0.0 for state in env.get_states()}
         self.policy: Policy = {}
         self.metrics: dict[str, Any] = {}
@@ -287,6 +332,7 @@ class ValueIteration:
         """Run Bellman optimality updates and extract a greedy policy."""
         bellman_residuals: list[float] = []
         bellman_backups = 0
+        progress_header_printed = False
 
         for iteration in range(1, self.max_iterations + 1):
             old_values = dict(self.values)
@@ -303,6 +349,11 @@ class ValueIteration:
                 delta = max(delta, abs(old_values[state] - best_value))
 
             bellman_residuals.append(delta)
+            if iteration % self.log_interval == 0 or delta < self.theta:
+                if not progress_header_printed:
+                    _print_planning_progress_header("ValueIteration", self.verbose)
+                    progress_header_printed = True
+                _print_planning_progress_row(iteration, delta, bellman_backups, self.verbose)
             if delta < self.theta:
                 break
 
@@ -349,9 +400,13 @@ class LinearProgrammingPlanner:
         self,
         env: PlanningGridWorld,
         solver_options: dict[str, Any] | None = None,
+        verbose: int = 0,
+        log_interval: int = 10,
     ) -> None:
         self.env = env
         self.solver_options = solver_options or {}
+        self.verbose = verbose
+        self.log_interval = _validated_log_interval(log_interval)
         self.values: ValueFunction = {state: 0.0 for state in env.get_states()}
         self.policy: Policy = {}
         self.metrics: dict[str, Any] = {}
@@ -387,6 +442,14 @@ class LinearProgrammingPlanner:
             for state in states
         ]
         solver_kwargs = {"method": "highs", **self.solver_options}
+        log_message(
+            (
+                "[LinearProgrammingPlanner] "
+                f"variables={len(states)} constraints={len(a_ub)}"
+            ),
+            self.verbose,
+            min_verbose=2,
+        )
         result = linprog(c=c, A_ub=a_ub, b_ub=b_ub, bounds=bounds, **solver_kwargs)
 
         if not result.success:
@@ -410,12 +473,14 @@ class LinearProgrammingPlanner:
             "solver_status": int(result.status),
             "solver_message": result.message,
             "solver_iterations": int(getattr(result, "nit", 0)),
+            "solver_iter": int(getattr(result, "nit", 0)),
             "objective_value": float(result.fun),
             "number_of_variables": len(states),
             "number_of_constraints": len(a_ub),
             "optimal_value_function": _serialize_value_function(self.values),
             "derived_policy": _serialize_policy(self.policy),
             "value_error_vs_value_iteration": None,
+            "policy_agreement_vs_value_iteration": None,
         }
         return self.values, self.policy
 
@@ -571,3 +636,34 @@ def _serialize_policy(policy: Policy) -> dict[str, Any]:
                 for action, probability in entry.items()
             }
     return serialized
+
+
+def _print_planning_progress_header(algorithm_name: str, verbose: int) -> None:
+    """Print planning convergence progress header."""
+    print_progress_header(
+        f"[{algorithm_name}] Convergence progress",
+        ("iter", "residual", "backups"),
+        (6, 10, 7),
+        verbose,
+    )
+
+
+def _print_planning_progress_row(
+    iteration: int,
+    residual: float,
+    backups: int,
+    verbose: int,
+) -> None:
+    """Print one planning convergence progress row."""
+    print_progress_row(
+        (iteration, format_scientific(residual), backups),
+        (6, 10, 7),
+        verbose,
+    )
+
+
+def _validated_log_interval(log_interval: int) -> int:
+    """Return a positive logging interval."""
+    if log_interval <= 0:
+        raise ValueError(f"log_interval must be positive, got {log_interval}")
+    return log_interval
