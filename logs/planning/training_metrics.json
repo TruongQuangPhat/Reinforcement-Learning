@@ -153,8 +153,8 @@
       "verbose": 0,
       "log_interval": 100
     },
-    "wall_time_sec": 0.004018460999759554,
-    "cpu_time_sec": 0.0042968000000001005,
+    "wall_time_sec": 0.0055202870007633464,
+    "cpu_time_sec": 0.005903200000000108,
     "current_memory_mb": 0.021060943603515625,
     "peak_memory_mb": 0.02327728271484375
   },
@@ -1772,8 +1772,8 @@
       "verbose": 0,
       "log_interval": 100
     },
-    "wall_time_sec": 0.36245303900068393,
-    "cpu_time_sec": 0.39016610000000007,
+    "wall_time_sec": 0.3853708959995856,
+    "cpu_time_sec": 0.4120020000000002,
     "current_memory_mb": 0.06914901733398438,
     "peak_memory_mb": 0.0695343017578125,
     "value_error_vs_value_iteration": 0.0,
@@ -1934,8 +1934,8 @@
       "verbose": 0,
       "log_interval": 100
     },
-    "wall_time_sec": 0.009336555000118096,
-    "cpu_time_sec": 0.01005250000000002,
+    "wall_time_sec": 0.010113309999724152,
+    "cpu_time_sec": 0.010817499999999924,
     "current_memory_mb": 0.01589679718017578,
     "peak_memory_mb": 0.018105506896972656
   },
@@ -2080,18 +2080,18 @@
       "verbose": 0,
       "log_interval": 100
     },
-    "wall_time_sec": 0.028990754000005836,
-    "cpu_time_sec": 0.04036490000000015,
+    "wall_time_sec": 0.017324729000392836,
+    "cpu_time_sec": 0.04078219999999977,
     "current_memory_mb": 0.05938148498535156,
     "peak_memory_mb": 0.40652942657470703,
     "value_mse_vs_value_iteration": 0.0
   },
   "planning_comparison": {
     "runtime_sec": {
-      "policy_evaluation": 0.004018460999759554,
-      "policy_iteration": 0.36245303900068393,
-      "value_iteration": 0.009336555000118096,
-      "linear_programming": 0.028990754000005836
+      "policy_evaluation": 0.0055202870007633464,
+      "policy_iteration": 0.3853708959995856,
+      "value_iteration": 0.010113309999724152,
+      "linear_programming": 0.017324729000392836
     },
     "bellman_backups": {
       "policy_evaluation": 870,
