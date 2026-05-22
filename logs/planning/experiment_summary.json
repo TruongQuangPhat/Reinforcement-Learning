@@ -8,10 +8,10 @@
     "linear_programming"
   ],
   "metadata": {
-    "timestamp_utc": "2026-05-21T17:04:38.563757+00:00",
-    "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
-    "numpy_version": "2.2.6",
-    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "timestamp_utc": "2026-05-22T06:35:31.347773+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "numpy_version": "2.4.5",
+    "platform": "Windows-11-10.0.26200-SP0",
     "random_seed": 42,
     "grid_size": [
       8,
@@ -66,10 +66,10 @@
   "lp_vi_max_abs_error": 0.0,
   "comparison_metrics": {
     "runtime_sec": {
-      "policy_evaluation": 0.0055202870007633464,
-      "policy_iteration": 0.3853708959995856,
-      "value_iteration": 0.010113309999724152,
-      "linear_programming": 0.017324729000392836
+      "policy_evaluation": 0.006428200053051114,
+      "policy_iteration": 0.3884892000351101,
+      "value_iteration": 0.016044100048020482,
+      "linear_programming": 0.016352200065739453
     },
     "bellman_backups": {
       "policy_evaluation": 870,
@@ -89,16 +89,16 @@
     "linear_programming_vs_value_iteration_policy_agreement": 1.0
   },
   "figure_paths": [
-    "report/figures/planning/policy_evaluation_values.png",
-    "report/figures/planning/fixed_policy_arrows.png",
-    "report/figures/planning/policy_iteration_values.png",
-    "report/figures/planning/policy_iteration_policy.png",
-    "report/figures/planning/value_iteration_values.png",
-    "report/figures/planning/value_iteration_policy.png",
-    "report/figures/planning/linear_programming_values.png",
-    "report/figures/planning/linear_programming_policy.png",
-    "report/figures/planning/value_iteration_residuals.png",
-    "report/figures/planning/policy_iteration_policy_changes.png",
-    "report/figures/planning/planning_runtime_comparison.png"
+    "report\\figures\\planning\\policy_evaluation_values.png",
+    "report\\figures\\planning\\fixed_policy_arrows.png",
+    "report\\figures\\planning\\policy_iteration_values.png",
+    "report\\figures\\planning\\policy_iteration_policy.png",
+    "report\\figures\\planning\\value_iteration_values.png",
+    "report\\figures\\planning\\value_iteration_policy.png",
+    "report\\figures\\planning\\linear_programming_values.png",
+    "report\\figures\\planning\\linear_programming_policy.png",
+    "report\\figures\\planning\\value_iteration_residuals.png",
+    "report\\figures\\planning\\policy_iteration_policy_changes.png",
+    "report\\figures\\planning\\planning_runtime_comparison.png"
   ]
 }

@@ -8,10 +8,10 @@
     "q_learning"
   ],
   "metadata": {
-    "timestamp_utc": "2026-05-21T17:04:51.866746+00:00",
-    "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]",
-    "numpy_version": "2.2.6",
-    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "timestamp_utc": "2026-05-22T06:35:52.862224+00:00",
+    "python_version": "3.14.2 (tags/v3.14.2:df79316, Dec  5 2025, 17:18:21) [MSC v.1944 64 bit (AMD64)]",
+    "numpy_version": "2.4.5",
+    "platform": "Windows-11-10.0.26200-SP0",
     "random_seed": 42,
     "grid_size": [
       8,
@@ -72,14 +72,14 @@
       "iterations": 15
     }
   },
-  "figure_dir": "report/figures/learning",
+  "figure_dir": "report\\figures\\learning",
   "comparison_figure_paths": [
-    "report/figures/learning/td_prediction_mse_vs_policy_evaluation.png",
-    "report/figures/learning/td_final_error_comparison.png",
-    "report/figures/learning/control_training_avg_return_comparison.png",
-    "report/figures/learning/control_training_success_rate_comparison.png",
-    "report/figures/learning/control_training_trap_rate_comparison.png",
-    "report/figures/learning/control_mse_vs_value_iteration.png",
-    "report/figures/learning/control_policy_agreement_vs_value_iteration.png"
+    "report\\figures\\learning\\td_prediction_mse_vs_policy_evaluation.png",
+    "report\\figures\\learning\\td_final_error_comparison.png",
+    "report\\figures\\learning\\control_training_avg_return_comparison.png",
+    "report\\figures\\learning\\control_training_success_rate_comparison.png",
+    "report\\figures\\learning\\control_training_trap_rate_comparison.png",
+    "report\\figures\\learning\\control_mse_vs_value_iteration.png",
+    "report\\figures\\learning\\control_policy_agreement_vs_value_iteration.png"
   ]
 }

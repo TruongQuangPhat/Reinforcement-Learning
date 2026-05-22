@@ -1,33 +1,33 @@
 {
   "td_zero": {
-    "wall_time_sec": 0.659251081999173,
-    "cpu_time_sec": 0.7048255999999995,
-    "current_memory_mb": 2.6986541748046875,
-    "peak_memory_mb": 2.7025985717773438,
+    "wall_time_sec": 0.60999239992816,
+    "cpu_time_sec": 0.59375,
+    "current_memory_mb": 2.693828582763672,
+    "peak_memory_mb": 2.698291778564453,
     "environment_steps": 85692,
     "q_updates": 0
   },
   "td_lambda": {
-    "wall_time_sec": 3.9303571459986415,
-    "cpu_time_sec": 4.0468177999999995,
-    "current_memory_mb": 2.6789674758911133,
-    "peak_memory_mb": 2.6872758865356445,
+    "wall_time_sec": 12.728153500007465,
+    "cpu_time_sec": 12.0625,
+    "current_memory_mb": 2.678131103515625,
+    "peak_memory_mb": 2.6861953735351562,
     "environment_steps": 85692,
     "q_updates": 0
   },
   "sarsa": {
-    "wall_time_sec": 0.13051754499974777,
-    "cpu_time_sec": 0.13026680000000113,
-    "current_memory_mb": 0.8921976089477539,
-    "peak_memory_mb": 0.8941936492919922,
+    "wall_time_sec": 0.1774223999818787,
+    "cpu_time_sec": 0.140625,
+    "current_memory_mb": 0.8518829345703125,
+    "peak_memory_mb": 0.8543233871459961,
     "environment_steps": 20185,
     "q_updates": 20185
   },
   "q_learning": {
-    "wall_time_sec": 0.16669754699978512,
-    "cpu_time_sec": 0.16637700000000066,
-    "current_memory_mb": 0.8868789672851562,
-    "peak_memory_mb": 0.8888750076293945,
+    "wall_time_sec": 0.2305231000063941,
+    "cpu_time_sec": 0.21875,
+    "current_memory_mb": 0.8448486328125,
+    "peak_memory_mb": 0.8472890853881836,
     "environment_steps": 19947,
     "q_updates": 19947
   }
