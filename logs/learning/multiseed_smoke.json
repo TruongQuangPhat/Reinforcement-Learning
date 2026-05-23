@@ -14,8 +14,8 @@
       "final_window_success_rate": 1.0,
       "final_window_trap_rate": 0.0,
       "policy_agreement_vs_value_iteration": 0.6379310344827587,
-      "mse_vs_value_iteration": 17.415916319128485,
-      "runtime": 0.06193871999948897,
+      "mse_vs_value_iteration": 17.41591631912849,
+      "runtime": 0.1312857000157237,
       "environment_steps": 9377
     },
     {
@@ -26,7 +26,7 @@
       "final_window_trap_rate": 0.01,
       "policy_agreement_vs_value_iteration": 0.6724137931034483,
       "mse_vs_value_iteration": 17.971618693245023,
-      "runtime": 0.054968039999948815,
+      "runtime": 0.12840519996825606,
       "environment_steps": 9408
     },
     {
@@ -36,8 +36,8 @@
       "final_window_success_rate": 1.0,
       "final_window_trap_rate": 0.0,
       "policy_agreement_vs_value_iteration": 0.6896551724137931,
-      "mse_vs_value_iteration": 18.821540066772517,
-      "runtime": 0.060574320000341686,
+      "mse_vs_value_iteration": 18.82154006677252,
+      "runtime": 0.1499220000114292,
       "environment_steps": 9566
     },
     {
@@ -47,8 +47,8 @@
       "final_window_success_rate": 1.0,
       "final_window_trap_rate": 0.0,
       "policy_agreement_vs_value_iteration": 0.5862068965517241,
-      "mse_vs_value_iteration": 12.235614326126607,
-      "runtime": 0.06786665999970865,
+      "mse_vs_value_iteration": 12.235614326126605,
+      "runtime": 0.16101199993863702,
       "environment_steps": 9150
     },
     {
@@ -58,8 +58,8 @@
       "final_window_success_rate": 1.0,
       "final_window_trap_rate": 0.0,
       "policy_agreement_vs_value_iteration": 0.6896551724137931,
-      "mse_vs_value_iteration": 11.954668555111734,
-      "runtime": 0.06850431000020762,
+      "mse_vs_value_iteration": 11.954668555111738,
+      "runtime": 0.16811069997493178,
       "environment_steps": 9166
     },
     {
@@ -69,8 +69,8 @@
       "final_window_success_rate": 1.0,
       "final_window_trap_rate": 0.0,
       "policy_agreement_vs_value_iteration": 0.603448275862069,
-      "mse_vs_value_iteration": 12.909752792085214,
-      "runtime": 0.0685135799994896,
+      "mse_vs_value_iteration": 12.909752792085213,
+      "runtime": 0.1671409000409767,
       "environment_steps": 9153
     }
   ],
@@ -83,7 +83,7 @@
       "mean_window_trap": 0.0033333333333333335,
       "std_window_trap": 0.004714045207910317,
       "mean_policy_agreement_vs_vi": 0.6666666666666666,
-      "mean_mse_vs_vi": 18.06969169304867
+      "mean_mse_vs_vi": 18.06969169304868
     },
     "q_learning": {
       "mean_window_return": -5.673333333333333,

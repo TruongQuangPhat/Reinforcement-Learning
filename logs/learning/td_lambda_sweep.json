@@ -12,44 +12,44 @@
     {
       "lambda": 0.0,
       "final_mse_vs_pe": 219.64179604724092,
-      "final_td_error": 1.6586587937877884,
-      "runtime": 1.0048722949995863,
+      "final_td_error": 1.6586587937877881,
+      "runtime": 2.9315144000574946,
       "environment_steps": 25448
     },
     {
       "lambda": 0.3,
       "final_mse_vs_pe": 120.5652064874402,
       "final_td_error": 1.6966951774617898,
-      "runtime": 1.009277029000259,
+      "runtime": 2.7753896000795066,
       "environment_steps": 25448
     },
     {
       "lambda": 0.5,
-      "final_mse_vs_pe": 63.02102220217648,
-      "final_td_error": 1.708516204286819,
-      "runtime": 0.9852151470004173,
+      "final_mse_vs_pe": 63.02102220217647,
+      "final_td_error": 1.7085162042868194,
+      "runtime": 2.856189800077118,
       "environment_steps": 25448
     },
     {
       "lambda": 0.7,
-      "final_mse_vs_pe": 26.281642971789925,
+      "final_mse_vs_pe": 26.281642971789918,
       "final_td_error": 1.6732902500347588,
-      "runtime": 1.0414269550001336,
+      "runtime": 2.664320499985479,
       "environment_steps": 25448
     },
     {
       "lambda": 0.9,
-      "final_mse_vs_pe": 41.2363335127071,
-      "final_td_error": 1.6944247405528887,
-      "runtime": 1.0790342689997487,
+      "final_mse_vs_pe": 41.23633351270707,
+      "final_td_error": 1.694424740552889,
+      "runtime": 2.7538360999897122,
       "environment_steps": 25448
     }
   ],
   "figure_paths": [
-    "report/figures/learning/td_lambda_sensitivity_mse.png"
+    "report\\figures\\learning\\td_lambda_sensitivity_mse.png"
   ],
   "best_lambda_by_mse": 0.7,
-  "best_mse_vs_pe": 26.281642971789925,
+  "best_mse_vs_pe": 26.281642971789918,
   "best_final_td_error": 1.6732902500347588,
-  "best_runtime": 1.0414269550001336
+  "best_runtime": 2.664320499985479
 }
