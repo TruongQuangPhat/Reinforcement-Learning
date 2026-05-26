@@ -26,7 +26,9 @@ Reinforcement-Learning/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
-├── run_experiments.py
+├── scripts/
+│   ├── run_experiments.py
+│   └── run_tests.py
 ├── envs/
 │   ├── __init__.py
 │   ├── grid_world.py

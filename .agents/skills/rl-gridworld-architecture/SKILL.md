@@ -1,6 +1,6 @@
 ---
 name: rl-gridworld-architecture
-description: Use this skill when designing or modifying the OOP architecture for the 8x8 Grid-world Reinforcement Learning project, including envs/, agents/, utils/, logs/, notebooks/, and run_experiments.py.
+description: Use this skill when designing or modifying the OOP architecture for the 8x8 Grid-world Reinforcement Learning project, including envs/, agents/, utils/, logs/, notebooks/, and scripts/run_experiments.py.
 ---
 
 # RL Grid-world Architecture Skill
@@ -36,7 +36,9 @@ Reinforcement-Learning/
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
-├── run_experiments.py
+├── scripts/
+│   ├── run_experiments.py
+│   └── run_tests.py
 ├── envs/
 │   ├── __init__.py
 │   ├── grid_world.py
