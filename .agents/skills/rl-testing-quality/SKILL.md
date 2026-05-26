@@ -43,7 +43,7 @@ Reproducibility tests:
 - same seed gives same deterministic results
 - JSON logs are valid
 - generated figures are saved
-- run_experiments.py completes without manual notebook execution
+- scripts/run_experiments.py completes without manual notebook execution
 
 ## Numerical tolerances
 

@@ -1,6 +1,6 @@
 ---
 name: rl-experiment-logging
-description: Use this skill when designing or modifying experiment execution, metrics collection, logging, profiling, reproducibility, JSON outputs, or run_experiments.py for the Grid-world RL project.
+description: Use this skill when designing or modifying experiment execution, metrics collection, logging, profiling, reproducibility, JSON outputs, or scripts/run_experiments.py for the Grid-world RL project.
 ---
 
 # RL Experiment Logging and Profiling Skill
@@ -8,7 +8,7 @@ description: Use this skill when designing or modifying experiment execution, me
 ## Scope
 
 Use this skill for:
-- run_experiments.py
+- scripts/run_experiments.py
 - JSON logging
 - metrics aggregation
 - reproducibility

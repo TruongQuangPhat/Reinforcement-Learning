@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-import run_experiments
+from scripts import run_experiments
 
 
 class ExperimentRunnerTests(unittest.TestCase):
