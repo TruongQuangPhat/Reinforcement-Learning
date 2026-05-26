@@ -335,8 +335,3 @@ Khi viết báo cáo, nên diễn giải cẩn trọng:
   learning rate, trajectory distribution và environment dynamics.
 - Policy agreement thấp hơn `1.0` không tự động đồng nghĩa policy tệ, vì
   Grid-world có thể có nhiều hành động tối ưu hoặc gần tối ưu.
-
-## License
-
-Repository hiện chưa khai báo license. Hãy xem project này như academic
-coursework cho đến khi có license file chính thức.
