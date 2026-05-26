@@ -308,30 +308,3 @@ python -m compileall envs agents utils scripts tests
 
 Test suite bao phủ environment behavior, planning algorithms, learning
 algorithms, visualization helpers, experiment outputs và deterministic seeding.
-
-## Tái Lập Kết Quả
-
-Dự án hỗ trợ tái lập thông qua:
-
-- Random seed cố định trong experiment runner và algorithm constructors.
-- JSON logs cho training metrics, system metrics và summaries.
-- Figures lưu sẵn cho report integration.
-- Unit tests cho core behavior.
-- Optional sensitivity và multi-seed smoke checks.
-
-Để đưa ra kết luận thống kê đầy đủ, nên mở rộng runner để lưu các independent
-runs theo timestamp và aggregate trên nhiều seed hơn. Built-in multi-seed smoke
-test chỉ là kiểm tra ổn định nhẹ, không phải full statistical evaluation.
-
-## Diễn Giải Học Thuật
-
-Khi viết báo cáo, nên diễn giải cẩn trọng:
-
-- `PolicyEvaluation`, `TDZero`, `TDLambda` là prediction methods.
-- `PolicyIteration`, `ValueIteration`, `LinearProgrammingPlanner` là
-  model-based optimal-control methods.
-- `SARSA` và `QLearning` học control policies từ samples.
-- TD(lambda) không mặc định tốt hơn TD(0); kết quả phụ thuộc `lambda`,
-  learning rate, trajectory distribution và environment dynamics.
-- Policy agreement thấp hơn `1.0` không tự động đồng nghĩa policy tệ, vì
-  Grid-world có thể có nhiều hành động tối ưu hoặc gần tối ưu.
