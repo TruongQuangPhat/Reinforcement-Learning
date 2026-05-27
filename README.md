@@ -92,8 +92,8 @@ của MDP.
 Bellman optimality backup:
 
 $$
-V^*(s) = \max_a \sum_{s'} P(s' \mid s, a)
-\left[r(s, a, s') + \gamma V^*(s')\right]
+V^{\ast}(s) = \max_a \sum_{s'} P(s' \mid s, a)
+\left[r(s, a, s') + \gamma V^{\ast}(s')\right]
 $$
 
 Linear Programming objective:
@@ -297,14 +297,3 @@ report/figures/
 ├── learning/
 └── comparison/
 ```
-
-## Kiểm Thử
-
-Chạy full test suite:
-
-```bash
-python scripts/run_tests.py
-```
-
-Test suite bao phủ environment behavior, planning algorithms, learning
-algorithms, visualization helpers, experiment outputs và deterministic seeding.
