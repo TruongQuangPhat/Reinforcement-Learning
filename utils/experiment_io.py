@@ -43,9 +43,6 @@ def save_experiment_logs(
     summary: dict[str, Any],
 ) -> None:
     """Save standard experiment log files under `logs/<group_name>/`.
-
-    TODO: Add conversion for NumPy arrays/scalars and other non-serializable
-    objects before dumping to JSON.
     """
     log_dir = ensure_dir(Path("logs") / group_name)
     save_json(training_metrics, log_dir / "training_metrics.json")

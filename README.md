@@ -7,22 +7,52 @@
 [![RL](https://img.shields.io/badge/RL%20Algorithms-from%20scratch-2E7D32?style=flat-square)](#thuật-toán)
 [![Tests](https://img.shields.io/badge/Tests-unittest-6A1B9A?style=flat-square)](#kiểm-thử)
 
-Repository này triển khai một nghiên cứu Reinforcement Learning từ đầu trên
-bài toán 8x8 Grid-world Navigation. Dự án so sánh các thuật toán planning
-model-based với các thuật toán learning sample-based trong cùng một môi trường
-MDP, có seed cố định, log JSON có cấu trúc và hình ảnh phục vụ báo cáo.
+Repository này là phần mã nguồn và thực nghiệm cho đồ án nghiên cứu
+**Chương 14 - Reinforcement Learning** trong giáo trình **Foundations of
+Machine Learning**. Dự án triển khai từ đầu bài toán **8x8 Grid-world
+Navigation** nhằm minh họa mô hình Markov Decision Process (MDP), hàm giá trị,
+chính sách, phương trình Bellman, các thuật toán Planning và các thuật toán
+Learning.
 
-Mục tiêu của project là phục vụ báo cáo Machine Learning theo hướng học thuật:
-ưu tiên tính đúng đắn, giả định rõ ràng, khả năng tái lập và diễn giải kết quả
-đúng với vai trò toán học của từng thuật toán.
+Trong đồ án, nhóm so sánh các thuật toán planning model-based với các thuật
+toán learning sample-based trên cùng một môi trường Grid-world. Project sử dụng
+seed cố định, lưu kết quả thực nghiệm dưới dạng JSON và sinh hình ảnh trực quan
+phục vụ phân tích trong báo cáo.
+
+Mục tiêu của project là đảm bảo tính đúng đắn, khả năng tái lập và diễn giải
+kết quả phù hợp với vai trò toán học của từng thuật toán, thay vì chỉ tập trung
+vào việc chạy được chương trình.
+
+## Thông Tin Nhóm
+
+| Họ tên | MSSV |
+| --- | --- |
+| Phạm Quốc Khánh | 23120283 |
+| Phạm Thành Nam | 23120301 |
+| Trương Quang Phát | 23120318 |
+| Châu Huỳnh Phúc | 23120329 |
+| Huỳnh Tấn Phước | 23120334 |
+
+## Nội Dung Đã Thực Hiện Và Mở Rộng
+
+Nhóm đã triển khai từ đầu môi trường **Grid-world 8x8** và các thuật toán
+Reinforcement Learning thuộc hai nhóm chính: Planning Algorithms và Learning
+Algorithms. Phần Planning sử dụng mô hình chuyển trạng thái đầy đủ của MDP,
+trong khi phần Learning chỉ học thông qua sample interaction với môi trường.
+
+So với nội dung lý thuyết trong sách, project mở rộng theo hướng thực nghiệm:
+tách riêng `PlanningGridWorld` và `LearningGridWorld`, bổ sung logging kết quả
+dạng JSON, profiling runtime/CPU/memory, visualization cho value function và
+policy, notebooks phân tích kết quả, sensitivity analysis cho một số siêu tham
+số và test suite để kiểm tra tính đúng đắn của implementation.
 
 ## Phạm Vi Nghiên Cứu
 
 Môi trường được mô hình hóa như một finite discounted Markov Decision Process:
 
-```text
-M = (S, A, P, r, gamma)
-```
+$$
+M = (S, A, P, r, \gamma)
+$$
 
 Cấu hình Grid-world mặc định:
 
@@ -61,15 +91,22 @@ của MDP.
 
 Bellman optimality backup:
 
-```text
-V*(s) = max_a sum_{s'} P(s' | s, a) [r(s, a, s') + gamma V*(s')]
-```
+$$
+V^*(s) = \max_a \sum_{s'} P(s' \mid s, a)
+\left[r(s, a, s') + \gamma V^*(s')\right]
+$$
 
-Ràng buộc trong Linear Programming:
+Linear Programming objective:
 
-```text
-V(s) >= r(s, a) + gamma sum_{s'} P(s' | s, a) V(s')
-```
+$$
+\min_V \sum_s V(s)
+$$
+
+Ràng buộc Bellman inequality:
+
+$$
+V(s) \ge r(s, a) + \gamma \sum_{s'} P(s' \mid s, a)V(s')
+$$
 
 ### Learning Algorithms
 
@@ -83,15 +120,14 @@ tương tác với môi trường.
 
 TD error cơ bản:
 
-```text
-delta_t = R_{t+1} + gamma V(S_{t+1}) - V(S_t)
-```
+$$
+\delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t)
+$$
 
 ## Cấu Trúc Repository
 
 ```text
 Reinforcement-Learning/
-├── AGENTS.md
 ├── README.md
 ├── requirements.txt
 ├── scripts/
@@ -117,7 +153,6 @@ Reinforcement-Learning/
 │   ├── planning/
 │   └── learning/
 ├── report/
-│   ├── README.md
 │   └── figures/
 └── tests/
 ```
@@ -164,45 +199,31 @@ Dependencies chính:
 Các thuật toán RL được cài đặt from scratch. Project không dùng Gymnasium,
 Stable-Baselines, RLlib hoặc scikit-learn cho phần thuật toán.
 
-## Chạy Thí Nghiệm
+## Tái Tạo Kết Quả Thực Nghiệm
 
-Chạy toàn bộ experiment suite mặc định:
+Để tái tạo kết quả, cài dependencies từ `requirements.txt`, sau đó chạy:
 
 ```bash
 python scripts/run_experiments.py --verbose 1
 ```
 
-Chạy với progress logs định kỳ:
+Lệnh trên sinh lại các file JSON trong `logs/planning/` và `logs/learning/`,
+đồng thời tạo/cập nhật các hình trong `report/figures/`. Project dùng seed mặc
+định `42`, vì vậy các kết quả chính có thể tái lập trên cùng cấu hình phần mềm.
 
-```bash
-python scripts/run_experiments.py --verbose 2 --log-interval 100 --window-size 100
-```
-
-Chạy im lặng:
-
-```bash
-python scripts/run_experiments.py --verbose 0
-```
-
-Các CLI options:
-
-| Option | Ý nghĩa |
-| --- | --- |
-| `--verbose {0,1,2}` | `0` silent, `1` summary, `2` periodic progress logs |
-| `--log-interval N` | Số iteration hoặc episode giữa hai dòng progress |
-| `--window-size N` | Window cho moving average và final-window learning metrics |
-| `--run-td-lambda-sweep` | Optional sensitivity theo lambda của TD(lambda) |
-| `--run-control-sensitivity` | Optional epsilon sensitivity cho SARSA/Q-learning |
-| `--run-gamma-sensitivity` | Optional gamma sensitivity cho Value Iteration |
-| `--run-multiseed-smoke` | Optional lightweight multi-seed smoke test |
-
-Chạy các experiment mở rộng:
+Để tái tạo đầy đủ các experiment mở rộng được liệt kê trong phần Outputs, chạy:
 
 ```bash
 python scripts/run_experiments.py --verbose 1 --run-td-lambda-sweep
 python scripts/run_experiments.py --verbose 1 --run-control-sensitivity
 python scripts/run_experiments.py --verbose 1 --run-gamma-sensitivity
 python scripts/run_experiments.py --verbose 1 --run-multiseed-smoke
+```
+
+Sau khi chạy experiment, có thể kiểm tra nhanh tính đúng đắn bằng:
+
+```bash
+python scripts/run_tests.py
 ```
 
 ## Thiết Kế Đánh Giá
@@ -250,13 +271,7 @@ sai kết quả.
 | Learned control so với optimal planning baseline | `SARSA` / `QLearning` vs `ValueIteration` |
 | Ảnh hưởng của eligibility traces | `TDZero` vs `TDLambda` |
 
-Không nên kết luận một learning method "kém hơn" planning method chỉ vì runtime
-lâu hơn hoặc cần nhiều environment steps hơn. Planning algorithms được biết
-model; learning algorithms phải ước lượng từ sampled experience.
-
 ## Outputs
-
-Experiment logs được lưu dưới dạng JSON:
 
 ```text
 logs/
@@ -283,27 +298,12 @@ report/figures/
 └── comparison/
 ```
 
-Notebook nên đọc lại logs và figures đã sinh, không reimplement core algorithms
-và không âm thầm chạy lại experiment với cấu hình khác.
-
 ## Kiểm Thử
 
 Chạy full test suite:
 
 ```bash
 python scripts/run_tests.py
-```
-
-Tắt ANSI color nếu cần:
-
-```bash
-python scripts/run_tests.py --no-color
-```
-
-Kiểm tra syntax/import:
-
-```bash
-python -m compileall envs agents utils scripts tests
 ```
 
 Test suite bao phủ environment behavior, planning algorithms, learning

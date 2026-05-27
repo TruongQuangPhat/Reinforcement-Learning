@@ -29,9 +29,6 @@ class PlanningGridWorld(GridWorldBase):
 
     def get_transitions(self, state: State, action: Action) -> list[Transition]:
         """Return `(probability, next_state, reward, done)` transitions.
-
-        TODO: Extend this method if the assignment requires stochastic movement
-        such as slip probability or action noise.
         """
         if self.is_terminal(state):
             return [(1.0, state, 0.0, True)]
